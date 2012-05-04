@@ -12,3 +12,7 @@ Installation instructions:
 3. at constants.php : adjust database access credentials
 4. copy the project folder inside your web root i.e. htdocs, www etc.
 5. test from browser: http://localhost/login-script
+
+License:
+--
+Released under GNU GPL license : http://www.gnu.org/licenses/gpl.html
