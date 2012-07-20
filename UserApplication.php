@@ -5,10 +5,10 @@ use My\Service\ValidatorService;
 session_start();   
 
 /* include the APIs */
-require_once "Dao/BaseDao.php";
-require_once "Dao/UserDao.php";
-require_once "Service/ValidatorService.php";
-require_once "Service/UserService.php";
+require_once __DIR__ . "/Dao/BaseDao.php";
+require_once __DIR__ . "/Dao/UserDao.php";
+require_once __DIR__ . "/Service/ValidatorService.php";
+require_once __DIR__ . "/Service/UserService.php";
 
 
 /**
