@@ -1,5 +1,5 @@
 <?php
-require_once 'UserApplication.php';
+require_once __DIR__ . '/UserApplication.php';
 ?>
 <!DOCTYPE html>
 <html>
@@ -25,7 +25,7 @@ require_once 'UserApplication.php';
 
             <form action="UserApplication.php" method="POST">
                 Name: <br />
-                <input type="text" name="name" value="<?php ($validator->getValue("name") != "") ? $validator->getValue("name") : $user->username; ?>"> <?php echo "<span style=\"color:#ff0000;\">" . $validator->getError("name") . "</span>"; ?>
+                <input type="text" name="name" value="<?php echo ($validator->getValue("name") != "") ? $validator->getValue("name") : $user->username; ?>"> <?php echo "<span style=\"color:#ff0000;\">" . $validator->getError("name") . "</span>"; ?>
                 <br />
                 Password:<br />
                 <input type="password" name="password" value=""> <?php echo "<span style=\"color:#ff0000;\">" . $validator->getError("password") . "</span>"; ?>
@@ -34,7 +34,7 @@ require_once 'UserApplication.php';
                 <input type="password" name="newpassword" value=""> <?php echo "<span style=\"color:#ff0000;\">" . $validator->getError("newpassword") . "</span>"; ?>
                 <br />
                 Phone: <br />
-                <input type="text" name="phone" value="<?php ($validator->getValue("phone") != "") ? $validator->getValue("phone") : $user->userphone; ?>"> <?php echo "<span style=\"color:#ff0000;\">" . $validator->getError("phone") . "</span>"; ?>
+                <input type="text" name="phone" value="<?php echo ($validator->getValue("phone") != "") ? $validator->getValue("phone") : $user->userphone; ?>"> <?php echo "<span style=\"color:#ff0000;\">" . $validator->getError("phone") . "</span>"; ?>
                 <br /><br />
                 <input type="hidden" name="update" value="1">
                 <input type="submit" value="Save">
