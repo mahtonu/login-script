@@ -1,13 +1,15 @@
 <?php
-include("constants.php");
-/* include the APIs */
-include("Dao/Database.php");
-include("Dao/User.php");
-include("Service/User.php");
-include("Service/Validator.php");
+namespace My\Application;
+use My\Service\UserService;
+use My\Service\ValidatorService;
+session_start();   
 
-$user = \Service\User::getinstance();
-$validator = \Service\Validator::getinstance();
+/* include the APIs */
+require_once "Dao/BaseDao.php";
+require_once "Dao/UserDao.php";
+require_once "Service/ValidatorService.php";
+require_once "Service/UserService.php";
+
 
 /**
  * UserApplication - This application class serves as end-user application.
@@ -15,113 +17,82 @@ $validator = \Service\Validator::getinstance();
  * this class corresponds with service classes. 
  * This application will serve & process user login, registration, profile update etc.
  */
-class UserApplication {
+class UserApplication {    
     
-    /* Class constructor */
-    public function __construct() {
-        global $user;
+    public function __construct(UserService $user, ValidatorService $validator) {
         
-        /* User submitted login request */
+        $this->userService = $user;
+        $this->validator = $validator;
+        
         if (isset($_POST['login'])) {
 
-            $this->_login();
+            $this->login();
         }
-        /* User submitted registration request */ 
         else if (isset($_POST['register'])) {
 
-            $this->_register();
+            $this->register();
         }
-        /* User submitted profile update request */ 
         else if (isset($_POST['update'])) {
 
-            $this->_update();
+            $this->update();
         }
-        /* User submitted logout request */ 
-        else if ( $user->logged_in && isset($_GET['logout']) ) {
-            
-            $this->_logout();
-            
+        else if ( isset($_GET['logout']) ) {
+
+            $this->logout();
+
         } 
     }
     
-    /**
-     * _login - redirects to homepage on successful login
-     */
-    private function _login() {
-        global $user, $validator;
+    public function login() {
 
-        /* Login attempt */
-        $success = $user->login($_POST['useremail'], $_POST['password'], isset($_POST['rememberme']));
-
+        $success = $this->userService->login($_POST);
 
         if ($success) {
-            /* Login successful */
             $_SESSION['statusMsg'] = "Successful login!";
         } else {
-            /* Login failed */
             $_SESSION['value_array'] = $_POST;
-            $_SESSION['error_array'] = $validator->getErrorArray();
+            $_SESSION['error_array'] = $this->validator->getErrorArray();
         }
-
+        
         header("Location: index.php");
     }
     
-    /**
-     * _register - registers a user information into data base 
-     */
-    private function _register() {
-        global $user, $validator;
+    public function register() {
 
-        /* Registration attempt */
-        $success = $user->register($_POST['name'], $_POST['useremail'], $_POST['password'], $_POST['phone']);
+        $success = $this->userService->register($_POST);
 
 
         if ($success) {
-            /* Registration successful */
             $_SESSION['statusMsg'] = "Registration was successful!";
             header("Location: index.php");
         } else {
-            /* Registration failed */
             $_SESSION['value_array'] = $_POST;
-            $_SESSION['error_array'] = $validator->getErrorArray();
+            $_SESSION['error_array'] = $this->validator->getErrorArray();
             header("Location: register.php");
         }
     }
     
-    /**
-     * _update - updates a user information 
-     */
-    private function _update() {
-        global $user, $validator;
+    public function update() {
 
-        /* User update attempt */
-        $success = $user->update($_POST['name'], $_POST['phone'], $_POST['password'], $_POST['newpassword']);
+        $success = $this->userService->update($_POST);
 
 
         if ($success) {
-            /* Update successful */
             $_SESSION['statusMsg'] = "Successfully Updated!";
             header("Location: profile.php");
         } else {
-            /* Update failed */
             $_SESSION['value_array'] = $_POST;
-            $_SESSION['error_array'] = $validator->getErrorArray();
+            $_SESSION['error_array'] = $this->validator->getErrorArray();
             header("Location: profileedit.php");
         }
     }
     
-    /**
-     * _logout - logout a user and return to index page
-     */
-    private function _logout(){
-        global $user;
+    public function logout(){
 
-        /* logout attempt */
-        $success = $user->logout(); 
+        $success = $this->userService->logout(); 
         header("Location: index.php");
     }
 }
 
-/* init the user app */
-$userApp = new UserApplication();
+$userApp = new \My\Application\UserApplication($user, $validator);
 ?>
