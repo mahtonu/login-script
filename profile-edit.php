@@ -25,16 +25,16 @@ require_once 'UserApplication.php';
 
             <form action="UserApplication.php" method="POST">
                 Name: <br />
-                <input type="text" name="name" value="<?= ($validator->getValue("name") != "") ? $validator->getValue("name") : $user->username ?>"> <? echo "<span style=\"color:#ff0000;\">" . $validator->getError("name") . "</span>"; ?>
+                <input type="text" name="name" value="<?php ($validator->getValue("name") != "") ? $validator->getValue("name") : $user->username; ?>"> <?php echo "<span style=\"color:#ff0000;\">" . $validator->getError("name") . "</span>"; ?>
                 <br />
                 Password:<br />
-                <input type="password" name="password" value=""> <? echo "<span style=\"color:#ff0000;\">" . $validator->getError("password") . "</span>"; ?>
+                <input type="password" name="password" value=""> <?php echo "<span style=\"color:#ff0000;\">" . $validator->getError("password") . "</span>"; ?>
                 <br />
                 New Password: <font size="2">(Leave blank to remain password unchanged)</font><br />
-                <input type="password" name="newpassword" value=""> <? echo "<span style=\"color:#ff0000;\">" . $validator->getError("newpassword") . "</span>"; ?>
+                <input type="password" name="newpassword" value=""> <?php echo "<span style=\"color:#ff0000;\">" . $validator->getError("newpassword") . "</span>"; ?>
                 <br />
                 Phone: <br />
-                <input type="text" name="phone" value="<?= ($validator->getValue("phone") != "") ? $validator->getValue("phone") : $user->userphone ?>"> <? echo "<span style=\"color:#ff0000;\">" . $validator->getError("phone") . "</span>"; ?>
+                <input type="text" name="phone" value="<?php ($validator->getValue("phone") != "") ? $validator->getValue("phone") : $user->userphone; ?>"> <?php echo "<span style=\"color:#ff0000;\">" . $validator->getError("phone") . "</span>"; ?>
                 <br /><br />
                 <input type="hidden" name="update" value="1">
                 <input type="submit" value="Save">
