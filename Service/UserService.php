@@ -43,7 +43,7 @@ class UserService {
         if (isset($_SESSION['useremail']) && isset($_SESSION['userhash']) &&
                 $_SESSION['useremail'] != self::GUEST_NAME) {
             
-            if ($this->userDao->getHashConfirmation($_SESSION['useremail'], $_SESSION['userhash']) != 0) {
+            if ($this->userDao->checkHashConfirmation($_SESSION['useremail'], $_SESSION['userhash']) === false) {
                 unset($_SESSION['useremail']);
                 unset($_SESSION['userhash']);
                 unset($_SESSION['userid']);
@@ -227,5 +227,5 @@ class UserService {
 
 }
 
-$user = new \My\Service\UserService($userDao, $validator);
+$userService = new \My\Service\UserService($userDao, $validator);
 ?>

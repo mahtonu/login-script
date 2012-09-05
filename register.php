@@ -1,5 +1,5 @@
 <?php
-require_once __DIR__ . '/UserApplication.php';
+require_once 'UserApplication.php';
 ?>
 <!DOCTYPE html>
 <html>
@@ -12,7 +12,7 @@ require_once __DIR__ . '/UserApplication.php';
         
         include 'menu.php';
         
-        if (!$user->logged_in) {
+        if (!$userService->logged_in) {
             ?>
 
             <h2>User Registration</h2><br />
@@ -25,16 +25,16 @@ require_once __DIR__ . '/UserApplication.php';
             
             <form action="UserApplication.php" method="POST">
                 Name: <br />
-                <input type="text" name="name" value="<?php echo $validator->getValue("name"); ?>"> <?php echo "<span style=\"color:#ff0000;\">".$validator->getError("name")."</span>"; ?>
+                <input type="text" name="name" value="<?= $validator->getValue("name") ?>"> <? echo "<span style=\"color:#ff0000;\">".$validator->getError("name")."</span>"; ?>
                 <br />
                 Email: <br />
-                <input type="text" name="useremail" value="<?php echo $validator->getValue("useremail") ?>"> <?php echo "<span style=\"color:#ff0000;\">".$validator->getError("useremail")."</span>"; ?>
+                <input type="text" name="useremail" value="<?= $validator->getValue("useremail") ?>"> <? echo "<span style=\"color:#ff0000;\">".$validator->getError("useremail")."</span>"; ?>
                 <br />
                 Password:<br />
-                <input type="password" name="password" value=""> <?php echo "<span style=\"color:#ff0000;\">".$validator->getError("password")."</span>"; ?>
+                <input type="password" name="password" value=""> <? echo "<span style=\"color:#ff0000;\">".$validator->getError("password")."</span>"; ?>
                 <br />
                 Phone: <br />
-                <input type="text" name="phone" value="<?php echo $validator->getValue("phone") ?>"> <?php echo "<span style=\"color:#ff0000;\">".$validator->getError("phone")."</span>"; ?>
+                <input type="text" name="phone" value="<?= $validator->getValue("phone") ?>"> <? echo "<span style=\"color:#ff0000;\">".$validator->getError("phone")."</span>"; ?>
                 <br /><br />
                 <input type="hidden" name="register" value="1">
                 <input type="submit" value="Register">

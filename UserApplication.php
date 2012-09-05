@@ -5,10 +5,10 @@ use My\Service\ValidatorService;
 session_start();   
 
 /* include the APIs */
-require_once __DIR__ . "/Dao/BaseDao.php";
-require_once __DIR__ . "/Dao/UserDao.php";
-require_once __DIR__ . "/Service/ValidatorService.php";
-require_once __DIR__ . "/Service/UserService.php";
+require_once "Dao/BaseDao.php";
+require_once "Dao/UserDao.php";
+require_once "Service/ValidatorService.php";
+require_once "Service/UserService.php";
 
 
 /**
@@ -19,9 +19,9 @@ require_once __DIR__ . "/Service/UserService.php";
  */
 class UserApplication {    
     
-    public function __construct(UserService $user, ValidatorService $validator) {
+    public function __construct(UserService $userService, ValidatorService $validator) {
         
-        $this->userService = $user;
+        $this->userService = $userService;
         $this->validator = $validator;
         
         if (isset($_POST['login'])) {
@@ -83,7 +83,7 @@ class UserApplication {
         } else {
             $_SESSION['value_array'] = $_POST;
             $_SESSION['error_array'] = $this->validator->getErrorArray();
-            header("Location: profileedit.php");
+            header("Location: profile-edit.php");
         }
     }
     
@@ -94,5 +94,5 @@ class UserApplication {
     }
 }
 
-$userApp = new \My\Application\UserApplication($user, $validator);
+$userApp = new \My\Application\UserApplication($userService, $validator);
 ?>

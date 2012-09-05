@@ -20,10 +20,10 @@ class UserDao extends BaseDao {
         $statement->execute();
                 
         if ($statement->rowCount() > 0) {
-            $row = $statement->fetch();
-
-            return $row;
+            return $statement->fetch();
         }
+        
+        return false;
     }
 
     public function insert(array $values) {
@@ -58,7 +58,7 @@ class UserDao extends BaseDao {
         }
         
         $sql .= implode(',', $fields);
-        $sql .= " WHERE id = $id LIMIT 1 ";
+        $sql .= " WHERE id = " . (int)$id ." LIMIT 1 ";
         
         $statement = $this->db->prepare($sql);
         foreach ($vals as $i=>$v) {
@@ -78,7 +78,7 @@ class UserDao extends BaseDao {
         return ($statement->rowCount() > 0 );
     }
 
-    public function getPassConfirmation($useremail, $password) {
+    public function checkPassConfirmation($useremail, $password) {
         
         $statement = $this->db->prepare("SELECT password FROM users WHERE useremail = :useremail LIMIT 1 ");
         $statement->bindParam(':useremail', $useremail);
@@ -87,14 +87,13 @@ class UserDao extends BaseDao {
         if ($statement->rowCount() > 0) {
             $row = $statement->fetch();
             
-            return (($password == $row['password']) ? 0 : 2);
+            return ($password == $row['password']);
         } 
         
-        return 1; 
-        
+        return false; 
     }
 
-    public function getHashConfirmation($useremail, $userhash) {
+    public function checkHashConfirmation($useremail, $userhash) {
 
         $statement = $this->db->prepare("SELECT userhash FROM users WHERE useremail = :useremail LIMIT 1");
         $statement->bindParam(':useremail', $useremail);
@@ -103,10 +102,10 @@ class UserDao extends BaseDao {
         if ($statement->rowCount() > 0) {
             $row = $statement->fetch();
 
-             return (($userhash == $row['userhash']) ? 0 : 2);
+            return ($userhash == $row['userhash']);
         } 
         
-        return 1; 
+        return false; 
     }
 
 }

@@ -3,7 +3,7 @@ namespace My\Service;
 use My\Dao\UserDao;
 /**
  * Validator Service Class - validates user inputs/forms, authentication credentials 
- * and holds & delivers errors found.
+ * and holds & delivers errors found. It also stores and delivers form values.
  */
 class ValidatorService {
 
@@ -144,15 +144,12 @@ class ValidatorService {
 
     public function validateCredentials($useremail, $password) {
         
-        $result = $this->userDao->getPassConfirmation($useremail, md5($password));
+        $result = $this->userDao->checkPassConfirmation($useremail, md5($password));
 
-        if ($result == 1) {
-            $this->setError("useremail", "Email address not found");
+        if ($result === false) {
+            $this->setError("password", "Email address or password is incorrect");
             return false;
-        } elseif ($result == 2) {
-            $this->setError("password", "Invalid password");
-            return false;
-        }
+        } 
         
         return true;
     }
@@ -169,9 +166,9 @@ class ValidatorService {
 
     public function checkPassword($useremail, $password) {
         
-        $result = $this->userDao->getPassConfirmation($useremail, md5($password));
+        $result = $this->userDao->checkPassConfirmation($useremail, md5($password));
 
-        if ($result != 0) {
+        if ($result === false) {
             $this->setError("password", "Current password incorrect");
             return false;
         }

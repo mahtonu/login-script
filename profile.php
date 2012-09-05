@@ -11,12 +11,12 @@ require_once 'UserApplication.php';
         <?php
         include 'menu.php';
 
-        if ($user->logged_in) {
+        if ($userService->logged_in) {
             echo '<h2>User Profile</h2>';
 
-            echo "Name : " . $user->username . "<br />";
-            echo "Email: " . $user->useremail . "<br />";
-            echo "Phone: " . $user->userphone . "<br />";
+            echo "Name : " . $userService->username . "<br />";
+            echo "Email: " . $userService->useremail . "<br />";
+            echo "Phone: " . $userService->userphone . "<br />";
         }
         ?>
     </body>

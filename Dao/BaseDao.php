@@ -19,7 +19,7 @@ abstract class BaseDao {
         try {
             $this->db = new \PDO($dsn, self::DB_USER, self::DB_PASSWORD);
         } catch (PDOException $e) {
-            echo 'Connection failed: ' . $e->getMessage();
+            throw new \Exception('Connection failed: ' . $e->getMessage());
         }
         
         return $this->db;

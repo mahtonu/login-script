@@ -1,5 +1,5 @@
 <?php
-require_once __DIR__ . '/UserApplication.php';
+require_once 'UserApplication.php';
 ?>
 <!DOCTYPE html>
 <html>
@@ -11,7 +11,7 @@ require_once __DIR__ . '/UserApplication.php';
         <?php
         include 'menu.php';
         
-        if (!$user->logged_in) {
+        if (!$userService->logged_in) {
         ?>
 
             <h2>User Login</h2>
@@ -25,12 +25,12 @@ require_once __DIR__ . '/UserApplication.php';
             
             <form action="UserApplication.php" method="POST">
                 Email: <br />
-                <input type="text" name="useremail" value="<?php echo $validator->getValue("useremail"); ?>"> <?php echo "<span style=\"color:#ff0000;\">".$validator->getError("useremail")."</span>"; ?>
+                <input type="text" name="useremail" value="<?= $validator->getValue("useremail") ?>"> <? echo "<span style=\"color:#ff0000;\">".$validator->getError("useremail")."</span>"; ?>
                 <br />
                 Password:<br />
-                <input type="password" name="password" value=""> <?php echo "<span style=\"color:#ff0000;\">".$validator->getError("password")."</span>"; ?>
+                <input type="password" name="password" value=""> <? echo "<span style=\"color:#ff0000;\">".$validator->getError("password")."</span>"; ?>
                 <br />
-                <input type="checkbox" name="rememberme" <?php echo($validator->getValue("rememberme") != "")?"checked":""; ?>>
+                <input type="checkbox" name="rememberme" <?=($validator->getValue("rememberme") != "")?"checked":""?>>
                 <font size="2">Remember me next time </font>
                 <br />
                 <input type="hidden" name="login" value="1">
